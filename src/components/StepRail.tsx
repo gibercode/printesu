@@ -24,7 +24,7 @@ export const StepRail = memo(function StepRail({ ids, parts, quote }: Props) {
             onClick={() => scrollToId(id)}
             className="tab"
             aria-current={id === active ? 'true' : undefined}
-            aria-label={`Pieza ${i + 1}, ${parts[i]?.name.trim() || 'sin nombre'}, ${rate.status === 'ready' ? formatBs(price, rate.rate) : formatRef(price)}`}
+            aria-label={`Pieza ${i + 1}${parts[i]?.name.trim() ? `, ${parts[i].name.trim()}` : ''}, ${rate.status === 'ready' ? formatBs(price, rate.rate) : formatRef(price)}`}
           >
             <span className="tab-n">{i + 1}</span>
             <span className="tab-p">

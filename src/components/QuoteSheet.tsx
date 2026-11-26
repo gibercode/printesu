@@ -38,10 +38,21 @@ export function QuoteSheet({ parts, quote, requester, date }: Props) {
             <li key={i}>
               <span className="q-n">{i + 1}</span>
               <div className="q-desc">
-                <strong>{p.name.trim() || `Pieza ${i + 1}`}</strong>
-                <span>
-                  {p.material} · {p.layer} mm{p.multicolor ? ' · multicolor' : ''}
-                </span>
+                {p.name.trim() ? (
+                  <>
+                    <strong>{p.name.trim()}</strong>
+                    <span>
+                      {p.material} · {p.layer} mm{p.multicolor ? ' · multicolor' : ''}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <strong>{p.material}</strong>
+                    <span>
+                      {p.layer} mm{p.multicolor ? ' · multicolor' : ''}
+                    </span>
+                  </>
+                )}
               </div>
               <span className="q-qty">×{line?.qty ?? 1}</span>
               <div className="q-price">

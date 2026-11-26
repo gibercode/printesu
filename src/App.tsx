@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FileDown, Info, Layers, Plus, Sparkles, Trash2 } from 'lucide-react'
 import { FormProvider, useFieldArray, useForm, useWatch } from 'react-hook-form'
 import { Breakdown } from './components/Breakdown'
@@ -10,10 +10,12 @@ import { SettingsPanel } from './components/SettingsPanel'
 import { Skeleton } from './components/Skeleton'
 import { StepRail } from './components/StepRail'
 import { TotalPanel } from './components/TotalPanel'
+import { AttemptContext } from './context/attempt'
 import { RateContext } from './context/rate'
 import { useBcvRate } from './hooks/useBcvRate'
 import { useQuote } from './hooks/useQuote'
 import { useTotalDelta } from './hooks/useTotalDelta'
+import { sanitizeSettings, useSettingsStore } from './store/settings'
 import { useTwoStepConfirm } from './hooks/useTwoStepConfirm'
 import { MAX_PARTS, emptyForm, emptyPart, exampleForm } from './lib/defaults'
 import { formatBs, formatRef } from './lib/format'
@@ -25,30 +27,54 @@ import './App.css'
 const today = new Date().toLocaleDateString('es-VE')
 
 export default function App() {
-  const form = useForm<QuoteForm>({ defaultValues: emptyForm(), mode: 'onChange' })
+  const settings = useSettingsStore((s) => s.settings)
+  const setSettings = useSettingsStore((s) => s.setSettings)
+  const form = useForm<QuoteForm>({
+    defaultValues: { ...emptyForm(), settings: useSettingsStore.getState().settings },
+    mode: 'all',
+  })
   const { control, reset } = form
   const { fields, append, remove } = useFieldArray({ control, name: 'parts' })
   const values = useWatch({ control }) as QuoteForm
-  const quote = useQuote(values)
+
+  // Form edits to the workshop settings are saved through the store (localStorage).
+  const formSettings = useWatch({ control, name: 'settings' })
+  useEffect(() => {
+    setSettings(sanitizeSettings(formSettings))
+  }, [formSettings, setSettings])
+
+  const quote = useQuote({ parts: values.parts, settings })
+  const [attempted, setAttempted] = useState(false)
+  const partsOk = quote.lines.every((l) => l.missing.length === 0)
+  const canExport = quote.total > 0 && partsOk
+  // A blocked export shows what is missing on the fields themselves and jumps to the first one.
+  const showMissing = async () => {
+    setAttempted(true)
+    await form.trigger('parts')
+    requestAnimationFrame(() => document.querySelector<HTMLElement>('.step [aria-invalid="true"]')?.focus())
+  }
   const { state: rate, refreshing, refresh } = useBcvRate()
   const [delta, resetDelta] = useTotalDelta(quote.total)
   const [exampleLoaded, setExampleLoaded] = useState(false)
   const isExample = exampleLoaded && !form.formState.isDirty
 
   const loadExample = () => {
-    const example = exampleForm()
+    const example = { ...exampleForm(), settings }
     reset(example)
-    resetDelta(computeQuote(example.parts, example.settings).total)
+    setAttempted(false)
+    resetDelta(computeQuote(example.parts, settings).total)
     setExampleLoaded(true)
   }
   const clear = useTwoStepConfirm(() => {
-    reset(emptyForm())
+    reset({ ...emptyForm(), settings })
+    setAttempted(false)
     resetDelta(0)
     setExampleLoaded(false)
   })
 
   return (
     <RateContext.Provider value={rate}>
+      <AttemptContext.Provider value={attempted}>
       <FormProvider {...form}>
         <form className="sheet" onSubmit={(e) => e.preventDefault()} noValidate>
           <header className="masthead">
@@ -70,7 +96,7 @@ export default function App() {
                 onBlur={clear.cancel}
               >
                 <Trash2 size={18} aria-hidden="true" />
-                {clear.armed ? 'Confirmar: vaciar todo' : 'Vaciar todo'}
+                {clear.armed ? 'Confirmar: vaciar piezas' : 'Vaciar piezas'}
               </button>
             </div>
           </header>
@@ -87,7 +113,7 @@ export default function App() {
               {isExample && (
                 <p className="example-note" role="note">
                   <Info size={18} aria-hidden="true" />
-                  <span>Datos de ejemplo inventados. Edítalos con los tuyos o pulsa «Vaciar todo».</span>
+                  <span>Datos de ejemplo inventados. Edítalos con los tuyos o pulsa «Vaciar piezas».</span>
                 </p>
               )}
               {quote.total === 0 && (
@@ -124,17 +150,22 @@ export default function App() {
               <div className="pin">
                 <TotalPanel total={quote.total} delta={delta} partCount={fields.length} refreshing={refreshing} onRefreshRate={refresh} />
                 <div className="outputs">
-                  <button type="button" className="btn primary" onClick={() => window.print()} disabled={quote.total === 0}>
+                  <button
+                    type="button"
+                    className="btn primary"
+                    aria-disabled={!canExport}
+                    onClick={() => (canExport ? window.print() : void showMissing())}
+                  >
                     <FileDown size={20} aria-hidden="true" />
                     Guardar como PDF
                   </button>
                 </div>
               </div>
 
-              <Breakdown parts={values.parts} quote={quote} settings={values.settings} />
+              <Breakdown parts={values.parts} quote={quote} settings={settings} />
 
               <div className="sendwrap">
-                <SendPanel quote={quote} />
+                <SendPanel quote={quote} namesOk={partsOk} />
               </div>
             </aside>
           </main>
@@ -145,6 +176,7 @@ export default function App() {
           </button>
         </form>
       </FormProvider>
+      </AttemptContext.Provider>
     </RateContext.Provider>
   )
 }

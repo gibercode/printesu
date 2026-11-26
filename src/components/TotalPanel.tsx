@@ -17,7 +17,7 @@ export function TotalPanel({ total, delta, partCount, refreshing, onRefreshRate 
   const main = (usd: number) => (rate.status === 'ready' ? formatBs(usd, rate.rate) : formatRef(usd))
   const note =
     total === 0
-      ? 'Sin datos todavía.'
+      ? ''
       : `${partCount} ${partCount === 1 ? 'pieza' : 'piezas'} · ${
           delta !== 0 ? `último cambio ${delta > 0 ? '+' : '−'}${main(Math.abs(delta))}` : 'cálculo con tus costes'
         }`

@@ -6,6 +6,7 @@ colors:
   panel: "#eef0f2"
   line: "#c9ced4"
   field-line: "#7d848c"
+  placeholder: "#9aa0a8"
   ink: "#1a1a1a"
   ink-soft: "#4b5058"
   accent-orange: "#ff5a1f"
@@ -150,12 +151,14 @@ The interface is Spanish, mobile-first, and dense in the way a manual is dense: 
 A manual's palette: white paper, cool grey panels, near-black ink, and a single signal orange.
 
 ### Primary
-- **Signal Orange** (#ff5a1f): step number squares, the logo tile, the primary button, the dollar reference inside the total card, the colour face of a multicolor drawing, the primary-button hover, the warning marker square, the confirm state of "Vaciar todo", and text selection. Ink sits on it, never white.
+- **Signal Orange** (#ff5a1f): step number squares, the logo tile, the primary button, the dollar reference inside the total card, the colour face of a multicolor drawing, the primary-button hover, the warning marker square, the confirm state of "Vaciar piezas", and text selection. Ink sits on it, never white.
 
 ### Neutral
 - **Paper White** (#ffffff): page, input cells, secondary button faces, drawing faces.
+- **Focus Orange** (#e84a10): the 1px border of the field that has focus, deepened from Signal Orange so it keeps 3:1 against white and the grey panels. Nothing else uses it.
 - **Panel Grey** (#eef0f2): step panels, settings and send panels, rail tabs, hint callouts, disabled buttons.
 - **Rule Grey** (#c9ced4): hairlines in the bill of materials, hovered tab body.
+- **Placeholder Grey** (#9aa0a8): the suggested value shown in an empty field, deliberately lighter than typed text so it never reads as a filled value.
 - **Field Line Grey** (#7d848c): input cell stroke, chosen to hold contrast against white.
 - **Ink** (#1a1a1a): text, focus ring, primary button, drawing lines, the heavy rule above the bill of materials, the minibar.
 - **Soft Ink** (#4b5058): labels, units, hints, secondary figures.
@@ -164,7 +167,7 @@ A manual's palette: white paper, cool grey panels, near-black ink, and a single 
 - **Error Red** (#b42318): invalid field stroke and its message, always paired with text.
 
 ### Icons and customer sheet
-Icons come from Lucide, drawn at one 2px stroke: 24px beside section headings, 20px in buttons and summaries, 18px in compact buttons and notes, 16px inline. They always sit beside a text label and are hidden from assistive tech. The PDF is a separate customer-facing sheet: the logo tile, a 4px orange rule under the header, ink numbered squares and quantity chips, Bs prices with the dollar reference beneath, and an ink total block under a 4px orange rule with the dollar reference in orange. The sheet uses no grey fills, and orange stays a small accent. It carries no internal costs and no explanatory notes.
+Icons come from Lucide, drawn at one 2px stroke: 24px beside section headings, 20px in buttons and summaries, 18px in compact buttons and notes, 16px inline. They always sit beside a text label and are hidden from assistive tech. The PDF is a separate customer-facing sheet: the logo tile, a 4px orange rule under the header, grey numbered squares and quantity chips, Bs prices with the dollar reference beneath, and a grey total block under a 4px orange rule. Orange stays a small accent on this sheet. It carries no internal costs and no explanatory notes.
 
 ### Responsive behaviour
 Piece cards are CSS containers and adapt to their own width, not the screen's: under 480px two field columns with the drawing inline; from 480px three; from 640px the drawing moves to a sticky side column; from 880px four columns. The piece tabs are equal-sized (56px tall, 76px minimum), scroll horizontally with snap on narrow screens, wrap from 960px, and the tab of the piece in view is filled ink.

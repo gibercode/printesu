@@ -4,7 +4,8 @@
   min-height: 100vh;
   min-height: 100dvh;
   margin: 0 auto;
-  padding-inline: max(16px, env(safe-area-inset-left)) max(16px, env(safe-area-inset-right));
+  padding-inline: max(16px, env(safe-area-inset-left))
+    max(16px, env(safe-area-inset-right));
 }
 
 .muted {
@@ -38,7 +39,7 @@
 }
 
 .wordmark {
-  font-family: 'Pacifico', 'Segoe Script', cursive;
+  font-family: "Pacifico", "Segoe Script", cursive;
   font-size: 36px;
   line-height: 52px;
   font-weight: 400;
@@ -126,7 +127,6 @@
   color: var(--accent);
 }
 
-/* Buttons */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -145,16 +145,17 @@
     color 150ms var(--ease);
 }
 
-.btn:hover:not(:disabled) {
+.btn:hover:not(:disabled, [aria-disabled="true"]) {
   background: var(--ink);
   color: var(--paper);
 }
 
-.btn:active:not(:disabled) {
+.btn:active:not(:disabled, [aria-disabled="true"]) {
   transform: translateY(1px);
 }
 
-.btn:disabled {
+.btn:disabled,
+.btn[aria-disabled="true"] {
   color: var(--ink-2);
   border-color: var(--line);
   background: var(--panel);
@@ -166,7 +167,16 @@
 }
 
 .btn.confirm {
+  border-color: var(--accent);
   background: var(--accent);
+  color: var(--ink);
+}
+
+.btn.confirm:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--ink);
+  filter: brightness(0.92);
 }
 
 .btn.primary {
@@ -176,18 +186,19 @@
   color: var(--ink);
 }
 
-.btn.primary:hover:not(:disabled) {
+.btn.primary:hover:not(:disabled, [aria-disabled="true"]) {
   border-color: var(--accent);
   background: var(--accent);
   color: var(--ink);
   filter: brightness(0.92);
 }
 
-.btn.primary:disabled {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: var(--ink);
-  opacity: 0.5;
+.btn.primary:disabled,
+.btn.primary[aria-disabled="true"] {
+  border-color: color-mix(in srgb, var(--accent) 40%, #fff);
+  background: color-mix(in srgb, var(--accent) 40%, #fff);
+  color: var(--ink-2);
+  opacity: 1;
 }
 
 .btn.add {
@@ -196,7 +207,6 @@
   border-width: 2px;
 }
 
-/* Step rail: equal tabs, the piece in view is marked */
 .rail {
   display: flex;
   gap: 8px;
@@ -246,12 +256,12 @@
   background: var(--line);
 }
 
-.tab[aria-current='true'] {
+.tab[aria-current="true"] {
   background: var(--ink);
   color: var(--paper);
 }
 
-.tab[aria-current='true'] .tab-p {
+.tab[aria-current="true"] .tab-p {
   color: var(--line);
 }
 
@@ -267,7 +277,6 @@
   color: var(--ink-2);
 }
 
-/* Steps */
 .step {
   container: step / inline-size;
   margin-bottom: 16px;
@@ -281,8 +290,8 @@
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   grid-template-areas:
-    'n price'
-    'name name';
+    "n price"
+    "name name";
   align-items: center;
   gap: 12px;
   margin-bottom: 16px;
@@ -333,7 +342,7 @@
 @media (min-width: 560px) {
   .step-head {
     grid-template-columns: auto minmax(0, 1fr) auto;
-    grid-template-areas: 'n name price';
+    grid-template-areas: "n name price";
     align-items: end;
     gap: 16px;
   }
@@ -425,7 +434,6 @@
   color: var(--ink);
 }
 
-/* Fields */
 .grid-fields {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -439,7 +447,6 @@
   }
 }
 
-/* A piece card adapts to its own width: inline drawing, then 3 field columns, then side drawing, then 4 */
 @container step (min-width: 480px) {
   .step .grid-fields {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -480,6 +487,8 @@
 
 .field > label:not(.toggle) {
   display: flex;
+  justify-content: space-between;
+  gap: 8px;
   align-items: flex-end;
   min-height: 36px;
   padding-bottom: 4px;
@@ -496,22 +505,11 @@
   border-radius: 6px;
   background: var(--paper);
   cursor: text;
-  transition:
-    border-color 150ms var(--ease),
-    box-shadow 150ms var(--ease);
-}
-
-/* one state for the whole cell (input, unit and chevron), never a separate line inside it */
-.cell:hover {
-  border-color: var(--ink);
-  box-shadow: inset 0 0 0 1px var(--ink);
+  transition: border-color 150ms var(--ease);
 }
 
 .cell:focus-within {
-  border-color: var(--ink);
-  box-shadow: inset 0 0 0 1px var(--ink);
-  outline: 3px solid var(--ink);
-  outline-offset: 1px;
+  border-color: var(--focus);
 }
 
 .cell:has(select) {
@@ -526,10 +524,8 @@
 }
 
 .cell[data-invalid],
-.cell[data-invalid]:hover,
 .cell[data-invalid]:focus-within {
   border-color: var(--error);
-  box-shadow: inset 0 0 0 1px var(--error);
 }
 
 .cell input,
@@ -546,7 +542,7 @@
 }
 
 .cell input::placeholder {
-  color: var(--ink-2);
+  color: #9aa0a8;
   opacity: 1;
 }
 
@@ -580,8 +576,37 @@
   font-weight: 700;
 }
 
+.req {
+  color: var(--ink-2);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+  color: var(--error);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 .field.check {
   align-self: end;
+}
+
+.field.check.wide {
+  align-self: start;
 }
 
 .toggle svg {
@@ -605,7 +630,6 @@
   cursor: pointer;
 }
 
-/* Settings and send */
 .settings,
 .send {
   padding: 0 16px;
@@ -632,6 +656,10 @@ summary::-webkit-details-marker {
   gap: 12px;
 }
 
+.send > summary {
+  justify-content: center;
+}
+
 .settings .lead {
   max-width: 65ch;
   margin-bottom: 16px;
@@ -642,6 +670,10 @@ summary::-webkit-details-marker {
   padding: 12px 0 16px;
   font-size: 14px;
   line-height: 20px;
+}
+
+.reset-settings {
+  margin-bottom: 16px;
 }
 
 .settings > .grid-fields,
@@ -661,7 +693,6 @@ summary::-webkit-details-marker {
   line-height: 20px;
 }
 
-/* Result */
 .total {
   padding: 20px;
   border-radius: 8px;
@@ -705,6 +736,7 @@ summary::-webkit-details-marker {
 }
 
 .total-note {
+  min-height: 20px;
   margin-top: 8px;
   color: var(--line);
   font-size: 14px;
@@ -716,9 +748,8 @@ summary::-webkit-details-marker {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  min-height: 49px;
-  margin-top: 12px;
-  border-top: 1px solid rgb(255 255 255 / 0.2);
+  min-height: 48px;
+  margin-top: 4px;
   font-size: 13px;
   line-height: 20px;
 }
@@ -759,19 +790,30 @@ summary::-webkit-details-marker {
   cursor: progress;
 }
 
-/* Loading: skeletons live inside the real line box, so arrival never shifts layout. */
 .skeleton {
   display: inline-block;
   height: 0.78em;
   max-width: 100%;
   vertical-align: -0.04em;
   border-radius: 6px;
-  background: linear-gradient(90deg, rgb(26 26 26 / 0.08) 25%, rgb(26 26 26 / 0.18) 50%, rgb(26 26 26 / 0.08) 75%) 0 0 / 200% 100%;
+  background: linear-gradient(
+      90deg,
+      rgb(26 26 26 / 0.08) 25%,
+      rgb(26 26 26 / 0.18) 50%,
+      rgb(26 26 26 / 0.08) 75%
+    )
+    0 0 / 200% 100%;
   animation: shimmer 1.4s ease-in-out infinite;
 }
 
 .skeleton.on-dark {
-  background: linear-gradient(90deg, rgb(255 255 255 / 0.12) 25%, rgb(255 255 255 / 0.28) 50%, rgb(255 255 255 / 0.12) 75%) 0 0 / 200% 100%;
+  background: linear-gradient(
+      90deg,
+      rgb(255 255 255 / 0.12) 25%,
+      rgb(255 255 255 / 0.28) 50%,
+      rgb(255 255 255 / 0.12) 75%
+    )
+    0 0 / 200% 100%;
 }
 
 @keyframes shimmer {
@@ -818,9 +860,7 @@ summary::-webkit-details-marker {
 }
 
 .breakdown {
-  margin-top: 16px;
-  padding: 16px 0 0;
-  border-top: 3px solid var(--ink);
+  margin-top: 24px;
 }
 
 .sub {
@@ -892,7 +932,8 @@ summary::-webkit-details-marker {
   align-items: center;
   width: auto;
   height: 56px;
-  padding: 0 max(16px, env(safe-area-inset-right)) env(safe-area-inset-bottom) max(16px, env(safe-area-inset-left));
+  padding: 0 max(16px, env(safe-area-inset-right)) env(safe-area-inset-bottom)
+    max(16px, env(safe-area-inset-left));
   border: 0;
   background: var(--ink);
   color: var(--paper);
@@ -900,11 +941,9 @@ summary::-webkit-details-marker {
   font-weight: 700;
   text-align: left;
   cursor: pointer;
-  /* keeps the bar on its own layer so it does not jitter while mobile toolbars collapse */
   transform: translateZ(0);
 }
 
-/* the on-screen keyboard needs the room: hide the bar while a field has focus */
 .sheet:has(input:focus, select:focus) .minibar {
   display: none;
 }
@@ -985,8 +1024,7 @@ summary::-webkit-details-marker {
     width: 40px;
     height: 40px;
     border-radius: 6px;
-    background: var(--ink);
-    color: var(--paper);
+    background: var(--panel);
     font-size: 20px;
     font-weight: 800;
   }
@@ -1008,8 +1046,7 @@ summary::-webkit-details-marker {
   .q-qty {
     padding: 4px 12px;
     border-radius: 6px;
-    background: var(--ink);
-    color: var(--paper);
+    background: var(--panel);
     font-size: 16px;
     font-weight: 800;
   }
@@ -1030,8 +1067,7 @@ summary::-webkit-details-marker {
     margin-top: 24px;
     padding: 20px 24px;
     border-top: 4px solid var(--accent);
-    background: var(--ink);
-    color: var(--paper);
+    background: var(--panel);
     font-variant-numeric: tabular-nums;
     break-inside: avoid;
   }
@@ -1055,15 +1091,57 @@ summary::-webkit-details-marker {
     font-size: 20px;
     line-height: 28px;
     font-weight: 700;
-    color: var(--accent);
   }
   .q-notes {
     margin-top: 24px;
     padding: 12px 16px;
     border-radius: 8px;
-    background: var(--ink);
-    color: var(--paper);
+    background: var(--panel);
     font-size: 14px;
     line-height: 20px;
   }
+}
+
+.printer-title {
+  margin: 0 0 12px;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.printer-block {
+  margin: 0 0 16px;
+  padding: 16px 0 0;
+  border: 0;
+  border-top: 1px solid var(--field-line);
+  min-width: 0;
+}
+
+.printer-block legend {
+  padding: 0 8px 0 0;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.printer-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+}
+
+.printer-foot .machine-rate {
+  padding: 12px 0;
+}
+
+.settings-actions {
+  padding-bottom: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+
+.settings-actions .reset-settings {
+  margin-bottom: 0;
 }

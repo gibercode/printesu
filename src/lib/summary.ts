@@ -16,7 +16,7 @@ export function buildSummary(
 ): string {
   const lines = parts.map(
     (p, i) =>
-      `${i + 1}. ${p.name.trim() || `Pieza ${i + 1}`} · ${p.material} ${p.layer} mm${p.multicolor ? " multicolor" : ""} · ${quote.lines[i].qty} uds · ${pricePair(quote.lines[i].final, rate)}`,
+      `${i + 1}. ${p.name.trim() ? `${p.name.trim()} · ` : ''}${p.material} ${p.layer} mm${p.multicolor ? " multicolor" : ""} · ${quote.lines[i].qty} uds · ${pricePair(quote.lines[i].final, rate)}`,
   );
   const rateLine =
     rate.status === "ready" ? `Tasa BCV: ${formatRate(rate.rate)} Bs/$` : "";

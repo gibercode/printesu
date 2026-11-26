@@ -6,6 +6,7 @@ import { PartDrawing } from './PartDrawing'
 import { LAYERS, MATERIALS } from '../lib/defaults'
 import { formatHours, formatUsd } from '../lib/format'
 import { machineRate } from '../lib/pricing'
+import { useSettingsStore } from '../store/settings'
 import type { LineCost } from '../lib/pricing'
 import type { QuoteForm } from '../lib/types'
 
@@ -21,18 +22,26 @@ type Props = {
 
 export function PartEditor({ id, index, line, canRemove, onRemove }: Props) {
   const part = useWatch<QuoteForm, `parts.${number}`>({ name: `parts.${index}` })
-  const settings = useWatch<QuoteForm, 'settings'>({ name: 'settings' })
-  const autoRate = machineRate(settings)
+  const settings = useSettingsStore((s) => s.settings)
+  const autoRate = machineRate(settings, part?.printerId)
+  const printerOptions = [
+    { value: '', label: settings.printerName.trim() || 'Principal' },
+    ...settings.printers.map((p, i) => ({ value: p.uid, label: p.name.trim() || `Impresora ${i + 2}` })),
+  ]
   const path = (field: PartField) => `parts.${index}.${field}` as `parts.${number}.${PartField}`
 
   return (
-    <section className="step" id={id} aria-labelledby={`${id}-t`}>
+    <section
+      className="step"
+      id={id}
+      aria-labelledby={`${id}-t`}
+    >
       <header className="step-head">
         <span className="step-n" aria-hidden="true">
           {index + 1}
         </span>
         <div className="step-name">
-          <Field name={path('name')} label="Nombre de la pieza" numeric={false} placeholder={`Pieza ${index + 1}`} />
+          <Field name={path('name')} label="Nombre de la pieza" numeric={false} required="Escribe un nombre para la pieza." />
         </div>
         <div className="step-price">
           <span id={`${id}-t`} className="muted">
@@ -49,7 +58,6 @@ export function PartEditor({ id, index, line, canRemove, onRemove }: Props) {
             infill={part?.infill ?? ''}
             multicolor={!!part?.multicolor}
             hours={part?.hours ?? ''}
-            minutes={part?.minutes ?? ''}
             qty={line.qty}
           />
           <figcaption>
@@ -66,10 +74,10 @@ export function PartEditor({ id, index, line, canRemove, onRemove }: Props) {
           <Field name={path('infill')} label="Relleno" unit="%" placeholder="20" />
           <Field name={path('qty')} label="Cantidad" unit="uds" placeholder="1" />
 
-          <Field name={path('modelG')} label="Peso del modelo" unit="g" placeholder="0" />
+          <Field name={path('modelG')} label="Peso del modelo" unit="g" placeholder="0" required="Escribe el peso." />
           <Field name={path('supportG')} label="Soportes" unit="g" placeholder="0" />
-          <Field name={path('pricePerKg')} label="Precio del material" unit="$/kg" placeholder="0" />
-          <CheckboxField name={`parts.${index}.multicolor`} label="Multicolor" />
+          <Field name={path('pricePerKg')} label="Precio del material" unit="$/kg" placeholder="0" required="Escribe el precio." />
+          <CheckboxField className="wide" name={`parts.${index}.multicolor`} label="Multicolor" />
 
           {part?.multicolor && (
             <Field
@@ -82,8 +90,27 @@ export function PartEditor({ id, index, line, canRemove, onRemove }: Props) {
             />
           )}
 
-          <Field name={path('hours')} label="Horas de impresión" unit="h" placeholder="0" />
-          <Field name={path('minutes')} label="Minutos" unit="min" placeholder="0" />
+          {settings.printers.length > 0 && (
+            <SelectField name={path('printerId')} label="Impresora" options={printerOptions} />
+          )}
+          <Field
+            name={path('hours')}
+            label="Tiempo de impresión"
+            unit="h"
+            kind="hours"
+            required="Escribe el tiempo."
+            placeholder="3:30"
+            hint="Como lo da tu slicer: 3,5 · 3:30 · 3h 30m."
+          />
+          {line.qty > 1 && (
+            <Field
+              name={path('perPlate')}
+              label="Piezas por plancha"
+              unit="uds"
+              placeholder="1"
+              hint="Si caben varias juntas, las horas son de toda la plancha."
+            />
+          )}
           <Field
             name={path('hourRate')}
             label="Costo por hora"
@@ -110,6 +137,7 @@ export function PartEditor({ id, index, line, canRemove, onRemove }: Props) {
             <span className="muted note-icon">
               <Timer size={16} aria-hidden="true" />
               {Math.round(line.grams * 10) / 10} g · {formatHours(line.hours)} de máquina
+              {line.runs > 1 && line.runs < line.qty ? ` · ${line.runs} tiradas` : ''}
             </span>
           )}
         </p>

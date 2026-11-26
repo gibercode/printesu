@@ -7,12 +7,12 @@ import type { Quote } from '../lib/pricing'
 import { buildSummary } from '../lib/summary'
 import type { QuoteForm } from '../lib/types'
 
-export function SendPanel({ quote }: { quote: Quote }) {
+export function SendPanel({ quote, namesOk }: { quote: Quote; namesOk: boolean }) {
   const { getValues, watch } = useFormContext<QuoteForm>()
   const rate = useRate()
   const [opened, setOpened] = useState(false)
   const digits = (watch('requester.to') ?? '').replace(/\D/g, '')
-  const hasQuote = quote.total > 0
+  const hasQuote = quote.total > 0 && namesOk
 
   const open = () => {
     const { parts, requester } = getValues()
@@ -46,7 +46,7 @@ export function SendPanel({ quote }: { quote: Quote }) {
       </div>
       <p className="hint" role="status">
         {!hasQuote
-          ? 'Completa al menos una pieza para preparar el mensaje.'
+          ? 'Completa el nombre y los datos de cada pieza para preparar el mensaje.'
           : opened
             ? 'Se abrió WhatsApp con el presupuesto. Pulsa enviar allí para terminar.'
             : 'El mensaje solo incluye piezas, cantidades y precios. El envío lo confirmas tú.'}

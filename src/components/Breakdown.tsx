@@ -41,11 +41,22 @@ export const Breakdown = memo(function Breakdown({ parts, quote, settings }: Pro
           {parts.map((p, i) => (
             <tr key={i}>
               <th scope="row">
-                {p.name.trim() || `Pieza ${i + 1}`}
-                <span className="muted">
-                  {' '}
-                  · ×{quote.lines[i]?.qty ?? 1} {p.material}, {p.layer} mm{p.multicolor ? ', multicolor' : ''}
-                </span>
+                {p.name.trim() ? (
+                  <>
+                    {p.name.trim()}
+                    <span className="muted">
+                      {' '}
+                      · ×{quote.lines[i]?.qty ?? 1} {p.material}, {p.layer} mm{p.multicolor ? ', multicolor' : ''}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    ×{quote.lines[i]?.qty ?? 1} {p.material}
+                    <span className="muted">
+                      , {p.layer} mm{p.multicolor ? ', multicolor' : ''}
+                    </span>
+                  </>
+                )}
               </th>
               <Amount usd={quote.lines[i]?.final ?? 0} />
             </tr>

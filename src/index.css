@@ -6,6 +6,7 @@
   --ink: #1a1a1a;
   --ink-2: #4b5058;
   --accent: #ff5a1f;
+  --focus: #e84a10; /* the accent, deepened to reach 3:1 against white and the grey panels */
   --error: #b42318;
   --font: 'Hanken Grotesk Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
