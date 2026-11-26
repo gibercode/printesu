@@ -142,7 +142,7 @@ The interface is Spanish, mobile-first, and dense in the way a manual is dense: 
 - White page, flat grey panels, no decorative borders, almost no shadow.
 - One orange (#ff5a1f) used only for numerals, the total and live signals; ink for everything that must be read.
 - One grotesk, heavy weight (800) for numbers and headings, tabular numerals everywhere.
-- Drawings and tab sizes carry data (layers, infill, colour, quantity, price share).
+- Drawings carry data (layers, infill, colour, quantity, print time); tabs are uniform.
 - Left column of steps, right column sticky total on wide screens; fixed ink minibar on narrow ones.
 
 ## Colors
@@ -150,7 +150,7 @@ The interface is Spanish, mobile-first, and dense in the way a manual is dense: 
 A manual's palette: white paper, cool grey panels, near-black ink, and a single signal orange.
 
 ### Primary
-- **Signal Orange** (#ff5a1f): step number squares, the logo tile, the primary button, the dollar reference inside the total card, the 4px top edge of each rail tab, the colour face of a multicolor drawing, the primary-button hover, the warning marker square, the confirm state of "Vaciar todo", and text selection. Ink sits on it, never white.
+- **Signal Orange** (#ff5a1f): step number squares, the logo tile, the primary button, the dollar reference inside the total card, the colour face of a multicolor drawing, the primary-button hover, the warning marker square, the confirm state of "Vaciar todo", and text selection. Ink sits on it, never white.
 
 ### Neutral
 - **Paper White** (#ffffff): page, input cells, secondary button faces, drawing faces.
@@ -165,6 +165,9 @@ A manual's palette: white paper, cool grey panels, near-black ink, and a single 
 
 ### Icons and customer sheet
 Icons come from Lucide, drawn at one 2px stroke: 24px beside section headings, 20px in buttons and summaries, 18px in compact buttons and notes, 16px inline. They always sit beside a text label and are hidden from assistive tech. The PDF is a separate customer-facing sheet: the logo tile, a 4px orange rule under the header, ink numbered squares and quantity chips, Bs prices with the dollar reference beneath, and an ink total block under a 4px orange rule with the dollar reference in orange. The sheet uses no grey fills, and orange stays a small accent. It carries no internal costs and no explanatory notes.
+
+### Responsive behaviour
+Piece cards are CSS containers and adapt to their own width, not the screen's: under 480px two field columns with the drawing inline; from 480px three; from 640px the drawing moves to a sticky side column; from 880px four columns. The piece tabs are equal-sized (56px tall, 76px minimum), scroll horizontally with snap on narrow screens, wrap from 960px, and the tab of the piece in view is filled ink.
 
 ### Mobile viewport
 The page uses dynamic viewport units (`100dvh`) and `viewport-fit=cover`; top and bottom safe areas are added to the masthead, the page's bottom padding and the fixed total bar. The bar has a fixed 56px height plus the bottom inset, sits on its own layer, and hides while a field has focus so the on-screen keyboard keeps the room.
@@ -204,7 +207,7 @@ Spacing rhythm is 4 / 8 / 12 / 16 / 24 / 32px; panels pad 16px, the total card 2
 Flat. Depth is made by tonal layering (white page, grey panels, white fields set into grey) and by a 3px ink rule above the bill of materials. The only shadow in the build is a 1px inset ring on invalid cells, which thickens the error stroke rather than lifting anything.
 
 ### Named Rules
-**The Flat Plane Rule.** Surfaces are colour fields, not objects. No drop shadows, no blur, no gradients except the hard-edged 4px orange cap on rail tabs.
+**The Flat Plane Rule.** Surfaces are colour fields, not objects. No drop shadows, no blur, no gradients.
 
 ## Shapes
 

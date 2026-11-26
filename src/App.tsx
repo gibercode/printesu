@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FileDown, Info, Layers, Plus, SlidersHorizontal, Sparkles, Trash2 } from 'lucide-react'
+import { FileDown, Info, Layers, Plus, Sparkles, Trash2 } from 'lucide-react'
 import { FormProvider, useFieldArray, useForm, useWatch } from 'react-hook-form'
 import { Breakdown } from './components/Breakdown'
 import { PartEditor } from './components/PartEditor'
@@ -116,10 +116,7 @@ export default function App() {
                 {fields.length >= MAX_PARTS ? `Máximo ${MAX_PARTS} piezas` : 'Añadir pieza'}
               </button>
 
-              <h2 className="sec">
-                <SlidersHorizontal size={24} aria-hidden="true" />
-                Ajustes
-              </h2>
+              <div className="settings-gap" />
               <SettingsPanel />
             </div>
 

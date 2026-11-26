@@ -1,4 +1,4 @@
-import { Minus, MessageCircle, Plus, Send } from 'lucide-react'
+import { MessageCircle, Send } from 'lucide-react'
 import { useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Field } from './Field'
@@ -26,8 +26,6 @@ export function SendPanel({ quote }: { quote: Quote }) {
       <summary>
         <Send size={20} aria-hidden="true" />
         Enviar al cliente
-        <Plus className="sum-open" size={20} aria-hidden="true" />
-        <Minus className="sum-close" size={20} aria-hidden="true" />
       </summary>
       <div className="grid-fields one">
         <Field name="requester.name" label="Nombre del cliente" numeric={false} />

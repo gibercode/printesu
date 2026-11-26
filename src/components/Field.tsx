@@ -1,41 +1,53 @@
-import { Palette } from 'lucide-react'
-import { useId, useRef } from 'react'
-import { useFormContext, type FieldPathByValue } from 'react-hook-form'
-import { validateNumber } from '../lib/pricing'
-import type { QuoteForm } from '../lib/types'
+import { Palette } from "lucide-react";
+import { useId, useRef } from "react";
+import { useFormContext, type FieldPathByValue } from "react-hook-form";
+import { validateNumber } from "../lib/pricing";
+import type { QuoteForm } from "../lib/types";
 
-type StringPath = FieldPathByValue<QuoteForm, string>
-type BooleanPath = FieldPathByValue<QuoteForm, boolean>
+type StringPath = FieldPathByValue<QuoteForm, string>;
+type BooleanPath = FieldPathByValue<QuoteForm, boolean>;
 
 type FieldProps = {
-  name: StringPath
-  label: string
-  unit?: string
-  placeholder?: string
-  hint?: string
-  /** Numeric fields accept decimals with comma or dot and validate on change. */
-  numeric?: boolean
-  className?: string
-}
+  name: StringPath;
+  label: string;
+  unit?: string;
+  placeholder?: string;
+  hint?: string;
+  numeric?: boolean;
+  className?: string;
+};
 
-export function Field({ name, label, unit, placeholder, hint, numeric = true, className }: FieldProps) {
-  const id = useId()
-  const inputRef = useRef<HTMLInputElement | null>(null)
-  const { register, getFieldState, formState } = useFormContext<QuoteForm>()
-  const { ref, ...field } = register(name, numeric ? { validate: validateNumber } : undefined)
-  const error = getFieldState(name, formState).error?.message
-  const describedBy = [hint && !error ? `${id}-h` : '', error ? `${id}-e` : ''].filter(Boolean).join(' ')
+export function Field({
+  name,
+  label,
+  unit,
+  placeholder,
+  hint,
+  numeric = true,
+  className,
+}: FieldProps) {
+  const id = useId();
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const { register, getFieldState, formState } = useFormContext<QuoteForm>();
+  const { ref, ...field } = register(
+    name,
+    numeric ? { validate: validateNumber } : undefined,
+  );
+  const error = getFieldState(name, formState).error?.message;
+  const describedBy = [hint && !error ? `${id}-h` : "", error ? `${id}-e` : ""]
+    .filter(Boolean)
+    .join(" ");
 
   return (
-    <div className={`field${className ? ` ${className}` : ''}`}>
+    <div className={`field${className ? ` ${className}` : ""}`}>
       <label htmlFor={id}>{label}</label>
       <div
         className="cell"
         data-invalid={error ? true : undefined}
         onMouseDown={(e) => {
           if (e.target !== inputRef.current) {
-            e.preventDefault()
-            inputRef.current?.focus()
+            e.preventDefault();
+            inputRef.current?.focus();
           }
         }}
       >
@@ -43,10 +55,10 @@ export function Field({ name, label, unit, placeholder, hint, numeric = true, cl
           id={id}
           {...field}
           ref={(el) => {
-            ref(el)
-            inputRef.current = el
+            ref(el);
+            inputRef.current = el;
           }}
-          inputMode={numeric ? 'decimal' : 'text'}
+          inputMode={numeric ? "decimal" : "text"}
           placeholder={placeholder}
           autoComplete="off"
           aria-invalid={error ? true : undefined}
@@ -70,19 +82,19 @@ export function Field({ name, label, unit, placeholder, hint, numeric = true, cl
         )
       )}
     </div>
-  )
+  );
 }
 
 type SelectFieldProps = {
-  name: StringPath
-  label: string
-  options: readonly string[]
-  unit?: string
-}
+  name: StringPath;
+  label: string;
+  options: readonly string[];
+  unit?: string;
+};
 
 export function SelectField({ name, label, options, unit }: SelectFieldProps) {
-  const id = useId()
-  const { register } = useFormContext<QuoteForm>()
+  const id = useId();
+  const { register } = useFormContext<QuoteForm>();
   return (
     <div className="field">
       <label htmlFor={id}>{label}</label>
@@ -101,11 +113,17 @@ export function SelectField({ name, label, options, unit }: SelectFieldProps) {
         )}
       </div>
     </div>
-  )
+  );
 }
 
-export function CheckboxField({ name, label }: { name: BooleanPath; label: string }) {
-  const { register } = useFormContext<QuoteForm>()
+export function CheckboxField({
+  name,
+  label,
+}: {
+  name: BooleanPath;
+  label: string;
+}) {
+  const { register } = useFormContext<QuoteForm>();
   return (
     <div className="field check">
       <label className="toggle">
@@ -114,5 +132,5 @@ export function CheckboxField({ name, label }: { name: BooleanPath; label: strin
         <span>{label}</span>
       </label>
     </div>
-  )
+  );
 }

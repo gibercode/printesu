@@ -1,4 +1,4 @@
-import { Minus, Plus, Wrench } from 'lucide-react'
+import { Wrench } from 'lucide-react'
 import { useFormContext, useWatch } from 'react-hook-form'
 import { Field } from './Field'
 import { PRINTER_PRESETS } from '../lib/defaults'
@@ -19,8 +19,6 @@ export function SettingsPanel() {
       <summary>
         <Wrench size={20} aria-hidden="true" />
         Ajustes del taller (opcionales)
-        <Plus className="sum-open" size={20} aria-hidden="true" />
-        <Minus className="sum-close" size={20} aria-hidden="true" />
       </summary>
       <p className="muted lead">
         Ya vienen con valores típicos, así que el costo de máquina por hora sale solo. Cámbialos si tu impresora es

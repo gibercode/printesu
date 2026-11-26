@@ -80,6 +80,10 @@
   }
 }
 
+.settings-gap {
+  height: 24px;
+}
+
 .sec {
   display: flex;
   align-items: center;
@@ -192,37 +196,67 @@
   border-width: 2px;
 }
 
-/* Step rail: tab height follows each part's share of the price */
+/* Step rail: equal tabs, the piece in view is marked */
 .rail {
   display: flex;
-  align-items: flex-end;
-  gap: 4px;
-  margin-bottom: 16px;
+  gap: 8px;
+  margin: 0 calc(-1 * max(16px, env(safe-area-inset-left))) 16px;
+  padding: 0 max(16px, env(safe-area-inset-left)) 4px;
   overflow-x: auto;
-  background: var(--paper);
-  scrollbar-width: thin;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: 16px;
+  scrollbar-width: none;
+}
+
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 960px) {
+  .rail {
+    margin-inline: 0;
+    padding-inline: 0;
+    flex-wrap: wrap;
+    overflow: visible;
+  }
 }
 
 .tab {
-  border: 0;
-  font: inherit;
-  cursor: pointer;
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 0 1 72px;
-  min-width: 52px;
-  padding-top: 8px;
-  border-radius: 6px 6px 0 0;
-  background: linear-gradient(var(--accent) 0 4px, var(--panel) 4px);
+  justify-content: center;
+  min-width: 76px;
+  height: 56px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--panel);
   color: var(--ink);
-  font-weight: 800;
-  text-align: center;
-  text-decoration: none;
-  transition: background-color 150ms var(--ease);
+  font: inherit;
+  scroll-snap-align: start;
+  cursor: pointer;
+  transition:
+    background-color 150ms var(--ease),
+    color 150ms var(--ease);
+}
+
+.tab:hover {
+  background: var(--line);
+}
+
+.tab[aria-current='true'] {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.tab[aria-current='true'] .tab-p {
+  color: var(--line);
 }
 
 .tab-n {
+  font-weight: 800;
   line-height: 20px;
 }
 
@@ -233,12 +267,9 @@
   color: var(--ink-2);
 }
 
-.tab:hover {
-  background: linear-gradient(var(--accent) 0 4px, var(--line) 4px);
-}
-
 /* Steps */
 .step {
+  container: step / inline-size;
   margin-bottom: 16px;
   padding: 16px;
   border-radius: 8px;
@@ -312,17 +343,9 @@
 }
 
 .step-body {
-  container-type: inline-size;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 16px;
-}
-
-@media (min-width: 720px) {
-  .step-body {
-    grid-template-columns: 168px minmax(0, 1fr);
-    gap: 24px;
-  }
 }
 
 .step-fig {
@@ -331,27 +354,10 @@
   gap: 16px;
 }
 
-@media (min-width: 720px) {
-  .step-fig {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-    position: sticky;
-    top: 16px;
-    align-self: start;
-  }
-}
-
 .drawing {
   width: 112px;
   height: auto;
   flex: none;
-}
-
-@media (min-width: 720px) {
-  .drawing {
-    width: 100%;
-  }
 }
 
 .d-face {
@@ -427,15 +433,40 @@
   align-items: start;
 }
 
-@container (min-width: 760px) {
-  .grid-fields {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
 @media (min-width: 720px) {
   .settings .grid-fields {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* A piece card adapts to its own width: inline drawing, then 3 field columns, then side drawing, then 4 */
+@container step (min-width: 480px) {
+  .step .grid-fields {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@container step (min-width: 640px) {
+  .step-body {
+    grid-template-columns: 168px minmax(0, 1fr);
+    gap: 24px;
+  }
+  .step-fig {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    position: sticky;
+    top: calc(16px + env(safe-area-inset-top));
+    align-self: start;
+  }
+  .drawing {
+    width: 100%;
+  }
+}
+
+@container step (min-width: 880px) {
+  .step .grid-fields {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
@@ -567,6 +598,7 @@
 }
 
 .toggle input {
+  flex: none;
   width: 24px;
   height: 24px;
   margin: 0;
@@ -593,20 +625,6 @@
 
 summary::-webkit-details-marker {
   display: none;
-}
-
-.sum-open,
-.sum-close {
-  margin-left: auto;
-}
-
-.sum-close,
-details[open] > summary .sum-open {
-  display: none;
-}
-
-details[open] > summary .sum-close {
-  display: block;
 }
 
 .settings > summary,

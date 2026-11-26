@@ -86,10 +86,10 @@ export function PartEditor({ id, index, line, canRemove, onRemove }: Props) {
           <Field name={path('minutes')} label="Minutos" unit="min" placeholder="0" />
           <Field
             name={path('hourRate')}
-            label="Costo de máquina por hora"
+            label="Costo por hora"
             unit="$/h"
             placeholder={autoRate > 0 ? autoRate.toFixed(2).replace('.', ',') : '0'}
-            hint={autoRate > 0 ? `Vacío: automático, ${formatUsd(autoRate)}/h.` : 'Opcional.'}
+            hint={autoRate > 0 ? `Vacío: automático (${formatUsd(autoRate)}/h).` : 'Opcional.'}
           />
         </div>
       </div>
