@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-25T00:00:00Z",
+  "title": "Design System: printesu",
+  "extensions": {
+    "colorMeta": {
+      "paper": { "role": "neutral", "displayName": "Paper White", "canonical": "#ffffff", "tonalRamp": ["#1a1a1a", "#4b5058", "#7d848c", "#c9ced4", "#e1e4e8", "#eef0f2", "#f7f8f9", "#ffffff"] },
+      "panel": { "role": "neutral", "displayName": "Panel Grey", "canonical": "#eef0f2", "tonalRamp": ["#1a1a1a", "#4b5058", "#7d848c", "#aab0b7", "#c9ced4", "#dde0e4", "#eef0f2", "#f7f8f9"] },
+      "line": { "role": "neutral", "displayName": "Rule Grey", "canonical": "#c9ced4", "tonalRamp": ["#1a1a1a", "#4b5058", "#7d848c", "#a1a7ae", "#c9ced4", "#dde0e4", "#eef0f2", "#f7f8f9"] },
+      "field-line": { "role": "neutral", "displayName": "Field Line Grey", "canonical": "#7d848c", "tonalRamp": ["#1a1a1a", "#32363b", "#4b5058", "#646a72", "#7d848c", "#a1a7ae", "#c9ced4", "#eef0f2"] },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#1a1a1a", "tonalRamp": ["#1a1a1a", "#2b2b2b", "#3d3d3d", "#555555", "#777777", "#999999", "#cccccc", "#f0f0f0"] },
+      "ink-soft": { "role": "neutral", "displayName": "Soft Ink", "canonical": "#4b5058", "tonalRamp": ["#1a1a1a", "#2e3237", "#4b5058", "#646a72", "#7d848c", "#a1a7ae", "#c9ced4", "#eef0f2"] },
+      "accent-orange": { "role": "primary", "displayName": "Signal Orange", "canonical": "#ff5a1f", "tonalRamp": ["#5c1f0a", "#8f340f", "#c2460f", "#ff5a1f", "#ff7d4d", "#ff9f7a", "#ffc2a8", "#ffe3d6"] },
+      "error": { "role": "semantic", "displayName": "Error Red", "canonical": "#b42318", "tonalRamp": ["#3d0a06", "#6b140d", "#8f1b11", "#b42318", "#d4544a", "#e58a83", "#f2bdb8", "#fbe6e4"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "The total figure only; 44px, 56px from 960px." },
+      "headline": { "displayName": "Headline", "purpose": "The printesu masthead title." },
+      "title": { "displayName": "Title", "purpose": "Section headings Piezas and Ajustes; step numerals." },
+      "body": { "displayName": "Body", "purpose": "Reading text, 16px; 14px in dense panels, 65ch max." },
+      "label": { "displayName": "Label", "purpose": "Field labels, units, hints at 12 to 13px in Soft Ink." }
+    },
+    "shadows": [
+      { "name": "invalid-ring", "value": "inset 0 0 0 1px #b42318", "purpose": "Thickens the error stroke on invalid field cells. The only shadow in the build." }
+    ],
+    "motion": [
+      { "name": "ease-out-expo", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Colour swaps on buttons and tabs, 150ms. All motion is disabled under prefers-reduced-motion." }
+    ],
+    "breakpoints": [
+      { "name": "step-head-row", "value": "560px" },
+      { "name": "step-body-split", "value": "720px" },
+      { "name": "two-column-layout", "value": "960px" },
+      { "name": "field-grid-four (container query)", "value": "760px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Default Button",
+      "kind": "button",
+      "refersTo": "button-default",
+      "description": "Paper face with ink border; inverts on hover. Tools and secondary actions.",
+      "html": "<button class=\"ds-btn\">Cargar ejemplo</button>",
+      "css": ".ds-btn { min-height: 48px; padding: 0 20px; border: 1px solid var(--ink, #1a1a1a); border-radius: 6px; background: #fff; color: #1a1a1a; font: 700 16px/1 'Hanken Grotesk Variable', Helvetica, Arial, sans-serif; cursor: pointer; transition: background-color 150ms cubic-bezier(0.16,1,0.3,1), color 150ms cubic-bezier(0.16,1,0.3,1); } .ds-btn:hover { background: #1a1a1a; color: #fff; } .ds-btn:active { transform: translateY(1px); } .ds-btn:focus-visible { outline: 3px solid #1a1a1a; outline-offset: 2px; }"
+    },
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Full-width ink button for the main result action; turns orange on hover.",
+      "html": "<button class=\"ds-btn-primary\">Guardar como PDF</button>",
+      "css": ".ds-btn-primary { width: 100%; min-height: 48px; padding: 0 20px; border: 1px solid #1a1a1a; border-radius: 6px; background: #1a1a1a; color: #fff; font: 700 16px/1 'Hanken Grotesk Variable', Helvetica, Arial, sans-serif; cursor: pointer; transition: background-color 150ms cubic-bezier(0.16,1,0.3,1), color 150ms cubic-bezier(0.16,1,0.3,1); } .ds-btn-primary:hover { background: #ff5a1f; color: #1a1a1a; } .ds-btn-primary:focus-visible { outline: 3px solid #1a1a1a; outline-offset: 2px; }"
+    },
+    {
+      "name": "Add Part Button",
+      "kind": "button",
+      "refersTo": "button-default",
+      "description": "Dashed full-width button that appends the next step.",
+      "html": "<button class=\"ds-btn-add\">Añadir pieza</button>",
+      "css": ".ds-btn-add { width: 100%; min-height: 48px; border: 2px dashed #1a1a1a; border-radius: 6px; background: #fff; color: #1a1a1a; font: 700 16px/1 'Hanken Grotesk Variable', Helvetica, Arial, sans-serif; cursor: pointer; } .ds-btn-add:hover { background: #1a1a1a; color: #fff; } .ds-btn-add:focus-visible { outline: 3px solid #1a1a1a; outline-offset: 2px; }"
+    },
+    {
+      "name": "Field",
+      "kind": "input",
+      "refersTo": "field-cell",
+      "description": "Labelled numeric cell with inline unit; 3px ink focus outline on the cell.",
+      "html": "<div class=\"ds-field\"><label for=\"ds-w\">Peso</label><div class=\"ds-cell\"><input id=\"ds-w\" value=\"120\" /><span class=\"ds-unit\">g</span></div></div>",
+      "css": ".ds-field label { display: flex; align-items: flex-end; min-height: 36px; padding-bottom: 4px; font: 400 13px/16px 'Hanken Grotesk Variable', Helvetica, Arial, sans-serif; color: #4b5058; } .ds-cell { display: flex; align-items: center; height: 48px; border: 1px solid #7d848c; border-radius: 6px; background: #fff; } .ds-cell:focus-within { outline: 3px solid #1a1a1a; outline-offset: 1px; } .ds-cell input { flex: 1; min-width: 0; height: 100%; padding: 0 12px; border: 0; outline: 0; background: transparent; font: inherit; font-variant-numeric: tabular-nums; } .ds-unit { padding-right: 12px; font-size: 13px; color: #4b5058; }"
+    },
+    {
+      "name": "Step Panel",
+      "kind": "card",
+      "refersTo": "step-panel",
+      "description": "Flat grey step: orange numeral square, name, price at the margin.",
+      "html": "<section class=\"ds-step\"><div class=\"ds-step-head\"><span class=\"ds-step-n\">1</span><strong class=\"ds-step-price\">12,40 €</strong></div><p class=\"ds-step-name\">Soporte de pared</p></section>",
+      "css": ".ds-step { padding: 16px; border-radius: 8px; background: #eef0f2; font-family: 'Hanken Grotesk Variable', Helvetica, Arial, sans-serif; color: #1a1a1a; } .ds-step-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; } .ds-step-n { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 6px; background: #ff5a1f; font-size: 24px; font-weight: 800; } .ds-step-price { font-size: 20px; line-height: 28px; font-weight: 800; font-variant-numeric: tabular-nums; } .ds-step-name { margin: 0; }"
+    },
+    {
+      "name": "Step Rail Tab",
+      "kind": "nav",
+      "refersTo": "tab",
+      "description": "Tab whose height follows the part's share of the price; orange 4px cap.",
+      "html": "<nav class=\"ds-rail\"><a class=\"ds-tab\" style=\"height:84px\" href=\"#\"><span>1</span><small>12,4</small></a><a class=\"ds-tab\" style=\"height:56px\" href=\"#\"><span>2</span><small>3,1</small></a></nav>",
+      "css": ".ds-rail { display: flex; align-items: flex-end; gap: 4px; } .ds-tab { display: flex; flex-direction: column; align-items: center; flex: 0 1 72px; min-width: 52px; padding-top: 8px; border-radius: 6px 6px 0 0; background: linear-gradient(#ff5a1f 0 4px, #eef0f2 4px); color: #1a1a1a; font: 800 16px/20px 'Hanken Grotesk Variable', Helvetica, Arial, sans-serif; text-decoration: none; } .ds-tab:hover { background: linear-gradient(#ff5a1f 0 4px, #c9ced4 4px); } .ds-tab small { font-size: 13px; line-height: 16px; font-weight: 600; color: #4b5058; } .ds-tab:focus-visible { outline: 3px solid #1a1a1a; outline-offset: 2px; }"
+    },
+    {
+      "name": "Total Plane",
+      "kind": "custom",
+      "refersTo": "total-plane",
+      "description": "Orange result block with the display figure and live delta of the last change.",
+      "html": "<section class=\"ds-total\"><h2>Total estimado</h2><p class=\"ds-total-fig\">48,20 €</p><p class=\"ds-total-note\">3 piezas · último cambio +2,10 €</p></section>",
+      "css": ".ds-total { padding: 20px; border-radius: 8px; background: #ff5a1f; color: #1a1a1a; font-family: 'Hanken Grotesk Variable', Helvetica, Arial, sans-serif; } .ds-total h2 { margin: 0; font-size: 16px; line-height: 24px; font-weight: 800; } .ds-total-fig { margin: 4px 0 8px; font-size: 44px; line-height: 52px; font-weight: 800; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; } .ds-total-note { margin: 0; font-size: 14px; font-weight: 600; }"
+    },
+    {
+      "name": "Part Drawing",
+      "kind": "custom",
+      "refersTo": "step-panel",
+      "description": "Isometric printed block in inline SVG; layer lines, hatch, colour face and copies follow the part's inputs.",
+      "html": "<svg class=\"ds-drawing\" viewBox=\"0 0 150 110\" width=\"112\" aria-hidden=\"true\"><path d=\"M60 10L100 30L60 50L20 30Z\" class=\"f\"/><path d=\"M20 30L60 50V90L20 70Z\" class=\"f\"/><path d=\"M60 50L100 30V70L60 90Z\" class=\"f c\"/><path d=\"M20 50L60 70M60 70L100 50\" class=\"t\"/></svg>",
+      "css": ".ds-drawing { height: auto; } .ds-drawing .f { fill: #fff; stroke: #1a1a1a; stroke-width: 1.5; stroke-linejoin: round; } .ds-drawing .c { fill: #ff5a1f; } .ds-drawing .t { fill: none; stroke: #1a1a1a; stroke-width: 1; opacity: 0.55; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Assembly Manual",
+    "overview": "The quote is read like the instruction booklet of a printer kit. Each part is a numbered step: an orange numeral square, an isometric line drawing of the part, its name and fields, and its price at the margin. The last page is the total. The page is white, step panels are flat grey, and the only colour is one orange, spent on step numerals, the total plane and a few signals. It refuses the category default of a form with a rounded summary card.\n\nThe drawings are not decoration. Each is an isometric printed block whose layer lines follow layer height, whose top hatch follows infill, whose right face turns orange when the part is multicolor, and whose stacked copies follow quantity (up to three). They are inline SVG drawn in the same ink line as the type. No raster images exist in the build.\n\nThe interface is Spanish, mobile-first, and dense in the way a manual is dense: small calm facts, big numerals. It is built to stay readable from 320px to 1440px with no horizontal page scroll and 48px touch targets.",
+    "keyCharacteristics": [
+      "White page, flat grey panels, no decorative borders, almost no shadow.",
+      "One orange (#ff5a1f) used only for numerals, the total and live signals; ink for everything that must be read.",
+      "One grotesk, heavy weight (800) for numbers and headings, tabular numerals everywhere.",
+      "Drawings and tab sizes carry data (layers, infill, colour, quantity, price share).",
+      "Left column of steps, right column sticky total on wide screens; fixed ink minibar on narrow ones."
+    ],
+    "rules": [
+      { "name": "The One Orange Rule", "body": "Orange marks position (step number), result (total) and attention (warning, confirm). It never decorates headings, borders or backgrounds of ordinary panels.", "section": "colors" },
+      { "name": "The Ink-On-Orange Rule", "body": "Text on orange is ink (#1a1a1a). White on orange is not used.", "section": "colors" },
+      { "name": "The Weight Is The Hierarchy Rule", "body": "Rank is made with weight 800 against 400 and with size, never with a second typeface or colour.", "section": "typography" },
+      { "name": "The Tabular Rule", "body": "Every figure that changes with input uses tabular numerals.", "section": "typography" },
+      { "name": "The Flat Plane Rule", "body": "Surfaces are colour fields, not objects. No drop shadows, no blur, no gradients except the hard-edged 4px orange cap on rail tabs.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do let drawings, tab heights and the total reflect the real inputs; any new visual must carry data.",
+      "Do keep ink text on orange and orange to numerals, the total, and signals.",
+      "Do keep 48px minimum targets and verify no horizontal overflow from 320px to 1440px.",
+      "Do use tabular numerals and weight 800 for figures.",
+      "Do keep copy in Spanish and keep focus as a 3px ink outline with 2px offset.",
+      "Do draw any new illustration as inline SVG in the 1.5px ink line language."
+    ],
+    "donts": [
+      "Don't wrap steps or the total in bordered, shadowed or heavily rounded cards; panels are flat colour fields.",
+      "Don't add a second accent colour or use orange for ordinary borders and backgrounds.",
+      "Don't convey state by colour alone; the error red always comes with text.",
+      "Don't use raster images or icon fonts; the build has none.",
+      "Don't add a second typeface."
+    ]
+  }
+}

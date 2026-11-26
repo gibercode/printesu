@@ -1,0 +1,81 @@
+:root {
+  --paper: #ffffff;
+  --panel: #eef0f2;
+  --line: #c9ced4;
+  --field-line: #7d848c;
+  --ink: #1a1a1a;
+  --ink-2: #4b5058;
+  --accent: #ff5a1f;
+  --error: #b42318;
+  --font: 'Hanken Grotesk Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  color-scheme: light;
+  font: 400 16px/24px var(--font);
+  color: var(--ink);
+  background: var(--paper);
+  accent-color: var(--accent);
+  caret-color: var(--ink);
+  scrollbar-color: var(--ink-2) var(--panel);
+  text-underline-offset: 0.2em;
+  font-feature-settings: 'tnum' 1;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--paper);
+}
+
+h1,
+h2,
+h3,
+p,
+figure {
+  margin: 0;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
