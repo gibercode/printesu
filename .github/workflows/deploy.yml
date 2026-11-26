@@ -1,0 +1,48 @@
+name: Deploy printesu
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy printesu
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+
+      - name: Setup pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@11.18.0 --activate
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build project
+        run: pnpm build
+        env:
+          VITE_BCV_API_URL: ${{ secrets.VITE_BCV_API_URL }}
+          NODE_ENV: production
+
+      - name: Deploy to Cloudflare Pages
+        run: |
+          pnpm dlx wrangler@4 pages deploy dist \
+            --project-name="printesu" \
+            --branch="${{ github.ref_name }}" \
+            --commit-dirty=true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
