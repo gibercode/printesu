@@ -1,7 +1,7 @@
 import { formatBs, formatRate, formatRef } from "./format";
 import type { Part, Requester } from "./types";
 import type { Quote } from "./pricing";
-import type { RateState } from "../hooks/useBcvRate";
+import type { RateState } from "../store/rate";
 
 const pricePair = (usd: number, rate: RateState) =>
   rate.status === "ready"

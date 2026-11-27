@@ -1,0 +1,62 @@
+.breakdown {
+  margin-top: 24px;
+}
+
+.sub {
+  margin: 24px 0 8px;
+  font-size: var(--text-md);
+  line-height: 24px;
+  font-weight: 800;
+}
+
+.sub:first-child {
+  margin-top: 0;
+}
+
+.breakdown table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.breakdown th,
+.breakdown td {
+  padding: 4px 0;
+  font-size: var(--text-sm);
+  line-height: 20px;
+  font-weight: 400;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.breakdown thead th {
+  font-size: var(--text-xs);
+  color: var(--ink-2);
+}
+
+.breakdown .r {
+  padding-left: 12px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.breakdown thead .r {
+  white-space: normal;
+}
+
+.breakdown thead th.r:last-child {
+  white-space: nowrap;
+}
+
+.breakdown .rule th,
+.breakdown .rule td {
+  border-top: 1px solid var(--ink);
+}
+
+.breakdown .total-row th,
+.breakdown .total-row td {
+  font-size: var(--text-md);
+  line-height: 28px;
+  font-weight: 800;
+  border-bottom: 0;
+}

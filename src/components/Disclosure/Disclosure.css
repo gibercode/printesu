@@ -1,0 +1,31 @@
+.disclosure {
+  padding: 0 16px;
+  border-radius: var(--radius-lg);
+  background: var(--panel);
+}
+
+.disclosure-handle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 56px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: var(--text-lg);
+  font-weight: 800;
+  text-align: left;
+  cursor: pointer;
+}
+
+.disclosure-handle > span:not(.chev) {
+  flex: 1;
+  min-width: 0;
+}
+
+.disclosure-body > .grid-fields {
+  padding-bottom: 16px;
+}

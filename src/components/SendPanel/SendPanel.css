@@ -1,0 +1,11 @@
+.send .actions {
+  display: grid;
+  gap: 8px;
+}
+
+.send .hint {
+  padding: 12px 0 16px;
+  margin: 0;
+  font-size: var(--text-xs);
+  line-height: 20px;
+}

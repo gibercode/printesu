@@ -1,0 +1,31 @@
+:root {
+  --paper: #ffffff;
+  --panel: #eef0f2;
+  --line: #c9ced4;
+  --field-line: #7d848c;
+  --placeholder: #9aa0a8;
+  --ink: #1a1a1a;
+  --ink-2: #4b5058;
+  --accent: #ff5a1f;
+  --focus: #e84a10;
+  --font:
+    "Hanken Grotesk Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-script: "Pacifico", "Segoe Script", cursive;
+  --text-xs: 13px;
+  --text-sm: 14px;
+  --text-md: 16px;
+  --text-lg: 20px;
+  --text-xl: 24px;
+  --text-2xl: 32px;
+  --text-3xl: 36px;
+  --text-4xl: 40px;
+
+  --radius: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 150ms;
+  --dur-base: 220ms;
+  --dur-slow: 320ms;
+}

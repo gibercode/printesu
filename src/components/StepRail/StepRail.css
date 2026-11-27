@@ -1,0 +1,69 @@
+.rail {
+  display: flex;
+  gap: 8px;
+  margin: 0 calc(-1 * max(16px, env(safe-area-inset-left))) 16px;
+  padding: 0 max(16px, env(safe-area-inset-left)) 4px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: 16px;
+  scrollbar-width: none;
+}
+
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 960px) {
+  .rail {
+    margin-inline: 0;
+    padding-inline: 0;
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+}
+
+.tab {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 76px;
+  height: 56px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: var(--panel);
+  color: var(--ink);
+  font: inherit;
+  scroll-snap-align: start;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+
+.tab:hover {
+  background: var(--line);
+}
+
+.tab[aria-current="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.tab[aria-current="true"] .tab-p {
+  color: var(--line);
+}
+
+.tab-n {
+  font-weight: 800;
+  line-height: 20px;
+}
+
+.tab-p {
+  font-size: var(--text-xs);
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--ink-2);
+}

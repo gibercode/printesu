@@ -1,0 +1,99 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 20px;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--paper);
+  font-size: var(--text-md);
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+
+.btn:hover:not(:disabled, [aria-disabled="true"]) {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.btn:active:not(:disabled, [aria-disabled="true"]) {
+  transform: translateY(1px);
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  color: var(--ink-2);
+  border-color: var(--line);
+  background: var(--panel);
+  cursor: not-allowed;
+}
+
+.btn.ghost {
+  background: transparent;
+}
+
+.btn.confirm {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.btn.confirm:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--ink);
+  filter: brightness(0.92);
+}
+
+.btn.primary {
+  width: 100%;
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.btn.primary:hover:not(:disabled, [aria-disabled="true"]) {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--ink);
+  filter: brightness(0.92);
+}
+
+.btn.primary:disabled,
+.btn.primary[aria-disabled="true"] {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--paper));
+  background: color-mix(in srgb, var(--accent) 40%, var(--paper));
+  color: var(--ink-2);
+  opacity: 1;
+}
+
+.btn.add {
+  width: 100%;
+  border-style: dashed;
+  border-width: 2px;
+}
+
+.link {
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  font-weight: 700;
+  text-decoration: underline;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.link:disabled {
+  text-decoration: none;
+  cursor: progress;
+}

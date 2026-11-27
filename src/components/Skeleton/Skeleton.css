@@ -1,0 +1,60 @@
+.skeleton {
+  display: inline-block;
+  height: 0.78em;
+  max-width: 100%;
+  vertical-align: -0.04em;
+  border-radius: var(--radius);
+  background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--ink) 8%, transparent) 25%,
+      color-mix(in srgb, var(--ink) 18%, transparent) 50%,
+      color-mix(in srgb, var(--ink) 8%, transparent) 75%
+    )
+    0 0 / 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+.skeleton.on-dark {
+  background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--paper) 12%, transparent) 25%,
+      color-mix(in srgb, var(--paper) 28%, transparent) 50%,
+      color-mix(in srgb, var(--paper) 12%, transparent) 75%
+    )
+    0 0 / 200% 100%;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+
+.spinner {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 700ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.reveal {
+  animation: reveal var(--dur-base) var(--ease) backwards;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+  }
+}

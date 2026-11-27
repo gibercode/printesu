@@ -1,0 +1,65 @@
+@media (min-width: 720px) {
+  .settings .grid-fields {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.settings .lead {
+  max-width: 65ch;
+  margin-bottom: 16px;
+  font-size: var(--text-sm);
+}
+
+.machine-rate {
+  padding: 12px 0 16px;
+  font-size: var(--text-sm);
+  line-height: 20px;
+}
+
+.reset-settings {
+  margin-bottom: 16px;
+}
+
+.printer-title {
+  margin: 0 0 12px;
+  font-size: var(--text-md);
+  line-height: 24px;
+}
+
+.printer-block {
+  margin: 0 0 16px;
+  padding: 16px 0 0;
+  border: 0;
+  border-top: 1px solid var(--field-line);
+  min-width: 0;
+}
+
+.printer-block legend {
+  padding: 0 8px 0 0;
+  font-weight: 700;
+  font-size: var(--text-md);
+  line-height: 24px;
+}
+
+.printer-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+}
+
+.printer-foot .machine-rate {
+  padding: 12px 0;
+}
+
+.settings-actions {
+  padding-bottom: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+
+.settings-actions .reset-settings {
+  margin-bottom: 0;
+}

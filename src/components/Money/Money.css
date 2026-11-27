@@ -1,0 +1,17 @@
+.money {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.money strong {
+  font-size: var(--text-lg);
+  line-height: 28px;
+  font-weight: 800;
+}
+
+.money small {
+  font-size: var(--text-xs);
+  line-height: 16px;
+  color: var(--ink-2);
+}

@@ -1,0 +1,26 @@
+.brand {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: 1;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-mark {
+  flex: none;
+  border-radius: var(--radius-xl);
+}
+
+.wordmark {
+  font-family: var(--font-script);
+  font-size: var(--text-3xl);
+  line-height: 52px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--ink);
+  padding-bottom: 2px;
+}

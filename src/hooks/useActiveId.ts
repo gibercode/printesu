@@ -1,22 +1,24 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
-/** Id of the element currently crossing the upper part of the viewport (for tab highlighting). */
 export function useActiveId(ids: string[]) {
-  const [active, setActive] = useState<string | null>(null)
-  const key = ids.join('|')
+  const [active, setActive] = useState<string | null>(null);
+  const key = ids.join("|");
 
   useEffect(() => {
-    const els = key.split('|').map((id) => document.getElementById(id)).filter((el): el is HTMLElement => !!el)
-    if (els.length === 0) return
+    const els = key
+      .split("|")
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => !!el);
+    if (els.length === 0) return;
     const observer = new IntersectionObserver(
       (entries) => {
-        for (const e of entries) if (e.isIntersecting) setActive(e.target.id)
+        for (const e of entries) if (e.isIntersecting) setActive(e.target.id);
       },
-      { rootMargin: '-15% 0px -70% 0px' },
-    )
-    els.forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [key])
+      { rootMargin: "-15% 0px -70% 0px" },
+    );
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [key]);
 
-  return active ?? ids[0] ?? null
+  return active ?? ids[0] ?? null;
 }

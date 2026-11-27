@@ -1,4 +1,3 @@
-/** An extra printer; the main one lives in the flat Settings fields. */
 export type Printer = {
   uid: string;
   name: string;
@@ -31,7 +30,6 @@ export type Part = {
   hourRate: string;
   qty: string;
   perPlate: string;
-  /** uid of an extra printer; empty means the main one. */
   printerId: string;
 };
 

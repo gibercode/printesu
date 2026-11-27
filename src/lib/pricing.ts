@@ -17,14 +17,19 @@ export const num = (raw: string | undefined) => parse(raw).value;
 export const validateNumber = (raw: string) =>
   !parse(raw).invalid || "Escribe un número de 0 o más.";
 
-/** Print time as the slicer shows it: 3.5, 3:30, 3h 30m, 3h, 45m. Returns hours. */
 export function parseHours(raw: string | undefined): Parsed {
   const t = (raw ?? "").trim().toLowerCase().replace(",", ".");
   const clock = t.match(/^(\d+):([0-5]?\d)$/);
-  if (clock) return { value: Number(clock[1]) + Number(clock[2]) / 60, invalid: false };
-  const units = t.match(/^(?:(\d+(?:\.\d+)?)\s*h[a-z]*)?\s*(?:(\d+(?:\.\d+)?)\s*m[a-z]*)?$/);
+  if (clock)
+    return { value: Number(clock[1]) + Number(clock[2]) / 60, invalid: false };
+  const units = t.match(
+    /^(?:(\d+(?:\.\d+)?)\s*h[a-z]*)?\s*(?:(\d+(?:\.\d+)?)\s*m[a-z]*)?$/,
+  );
   if (units && (units[1] || units[2])) {
-    return { value: Number(units[1] ?? 0) + Number(units[2] ?? 0) / 60, invalid: false };
+    return {
+      value: Number(units[1] ?? 0) + Number(units[2] ?? 0) / 60,
+      invalid: false,
+    };
   }
   return parse(raw);
 }
@@ -34,12 +39,19 @@ export const validateHours = (raw: string) =>
 
 export const REPAIR_ALLOWANCE = 0.05;
 
-type PrinterCosts = Pick<Settings, "printerCost" | "lifeHours" | "maintPerHour">;
+type PrinterCosts = Pick<
+  Settings,
+  "printerCost" | "lifeHours" | "maintPerHour"
+>;
 
 function rateOf(p: PrinterCosts): number {
-  const life = p.lifeHours.trim() === "" ? num(DEFAULT_LIFE_HOURS) : num(p.lifeHours);
+  const life =
+    p.lifeHours.trim() === "" ? num(DEFAULT_LIFE_HOURS) : num(p.lifeHours);
   if (life <= 0) return num(p.maintPerHour);
-  const cost = p.printerCost.trim() === "" ? num(DEFAULT_PRINTER_COST) : num(p.printerCost);
+  const cost =
+    p.printerCost.trim() === ""
+      ? num(DEFAULT_PRINTER_COST)
+      : num(p.printerCost);
   const depreciation = cost / life;
   const maintenance =
     p.maintPerHour.trim() === ""
@@ -48,7 +60,6 @@ function rateOf(p: PrinterCosts): number {
   return depreciation + maintenance;
 }
 
-/** Hourly machine cost of one printer: an extra one by uid, otherwise the main one. */
 export function machineRate(s: Settings, printerId = ""): number {
   return rateOf(s.printers.find((p) => p.uid === printerId) ?? s);
 }

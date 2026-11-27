@@ -1,0 +1,22 @@
+.collapse {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows var(--dur-slow) var(--ease);
+}
+
+.collapse-in {
+  min-height: 0;
+  overflow: clip;
+  margin-inline: -4px;
+  padding-inline: 4px;
+  opacity: 1;
+  transition: opacity var(--dur-base) var(--ease);
+}
+
+.collapse[data-open="false"] {
+  grid-template-rows: 0fr;
+}
+
+.collapse[data-open="false"] > .collapse-in {
+  opacity: 0;
+}

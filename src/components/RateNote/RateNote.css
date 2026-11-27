@@ -1,0 +1,26 @@
+.rate {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 48px;
+  margin-top: 4px;
+  font-size: var(--text-xs);
+  line-height: 20px;
+}
+
+.rate-text {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0 6px;
+}
+
+.rate-text svg {
+  flex: none;
+  color: var(--accent);
+}
+
+.rate-warn {
+  font-weight: 700;
+}

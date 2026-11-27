@@ -1,0 +1,26 @@
+.chev {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius);
+  color: var(--ink-2);
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+
+.chev svg {
+  transition: transform var(--dur-slow) var(--ease);
+}
+
+/* The square stays put on hover; only the arrow inside turns. */
+button:hover > .chev {
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+  color: var(--ink);
+}
+
+.chev[data-open="true"] svg {
+  transform: rotate(180deg);
+}

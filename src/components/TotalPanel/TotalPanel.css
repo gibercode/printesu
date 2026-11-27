@@ -1,0 +1,53 @@
+.total {
+  container-type: inline-size;
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  background: var(--ink);
+  color: var(--paper);
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.total-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--line);
+  font-size: var(--text-md);
+  line-height: 24px;
+  font-weight: 800;
+}
+
+.total-figure {
+  margin: 4px 0 8px;
+  /* Steps down on a narrow card instead of wrapping, so a long amount never changes the height. */
+  font-size: var(--text-2xl);
+  line-height: 48px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+
+.total-bs {
+  font-size: var(--text-lg);
+  line-height: 28px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+@container (min-width: 400px) {
+  .total-figure {
+    font-size: var(--text-4xl);
+  }
+}
+
+.total-note {
+  height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 8px;
+  color: var(--line);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
